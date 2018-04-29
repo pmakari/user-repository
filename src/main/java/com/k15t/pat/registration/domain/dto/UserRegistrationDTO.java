@@ -1,5 +1,6 @@
 package com.k15t.pat.registration.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.k15t.pat.registration.domain.entity.UserEntity;
 import lombok.*;
 import org.hibernate.validator.constraints.Email;
@@ -18,8 +19,6 @@ import javax.validation.constraints.Pattern;
 @Setter
 public class UserRegistrationDTO {
 
-    private Long id;
-
     @NotBlank
     private String name;
 
@@ -33,5 +32,17 @@ public class UserRegistrationDTO {
     @Pattern(regexp = "^[+]{0,1}[0-9]{5,32}$")
     private String phoneNumber;
 
-    private UserEntity.Address address;
+    @NotBlank
+    private String country;
+
+    @NotBlank
+    private String city;
+
+    @NotBlank
+    private String street;
+
+    @NotBlank
+    private String zipCode;
+
+    private Short houseNumber;
 }
