@@ -1,5 +1,6 @@
 package com.k15t.pat;
 
+import com.k15t.pat.registration.config.JerseyConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.glassfish.jersey.servlet.ServletProperties;
 import org.springframework.boot.SpringApplication;

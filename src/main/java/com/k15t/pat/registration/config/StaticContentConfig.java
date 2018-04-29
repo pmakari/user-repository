@@ -1,4 +1,4 @@
-package com.k15t.pat;
+package com.k15t.pat.registration.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

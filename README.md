@@ -9,7 +9,7 @@ help us out and get it done.
  
 ## But *what* should I do exactly?
 Extend the form with the required fields (see registration.vm for further details) and 
-store the entered information by using a REST endpoint. Giv the user feedback if the
+store the entered information by using a REST endpoint. Giv the userEntity feedback if the
 save was successful or in case of an error. Ensure mandatory fields will be entered
 and verify the entered values are reasonable e.g. the name must not contains numbers.
 

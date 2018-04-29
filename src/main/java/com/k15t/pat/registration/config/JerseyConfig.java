@@ -1,4 +1,4 @@
-package com.k15t.pat;
+package com.k15t.pat.registration.config;
 
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.beans.factory.annotation.Autowired;
