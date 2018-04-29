@@ -24,13 +24,17 @@ public class UserServiceImpl implements UserService{
     public UserRegistrationDTO save(UserRegistrationDTO registrationDTO) {
         UserEntity userEntity = UserEntity.builder().name(registrationDTO.getName())
         .email(registrationDTO.getEmail()).password(registrationDTO.getPassword()).phoneNumber(registrationDTO.getPhoneNumber())
-        .address(UserEntity.Address.builder().country(registrationDTO.getAddress().getCountry())
-                .city(registrationDTO.getAddress().getCity()).street(registrationDTO.getAddress().getStreet()).zipCode(registrationDTO.getAddress().getZipCode())
-                .houseNumber(registrationDTO.getAddress().getHouseNumber()).build()).build();
+        .address(UserEntity.Address.builder().country(registrationDTO.getCountry())
+                .city(registrationDTO.getCity()).street(registrationDTO.getStreet()).zipCode(registrationDTO.getZipCode())
+                .houseNumber(registrationDTO.getHouseNumber()).build()).build();
         try {
             UserEntity storedUserEntity = userRepository.save(userEntity);
             return  UserRegistrationDTO.builder().email(storedUserEntity.getEmail()).name(storedUserEntity.getName())
-            .phoneNumber(storedUserEntity.getPhoneNumber()).address(storedUserEntity.getAddress()).id(storedUserEntity.getId()).build();
+            .phoneNumber(storedUserEntity.getPhoneNumber()).city(storedUserEntity.getAddress().getCity())
+                    .country(storedUserEntity.getAddress().getCountry())
+                    .street(storedUserEntity.getAddress().getStreet())
+                    .zipCode(storedUserEntity.getAddress().getZipCode())
+                    .houseNumber(storedUserEntity.getAddress().getHouseNumber()).build();
         }catch (DataIntegrityViolationException ex){
             throw new DuplicateUserException(ex.getMessage(),ex);
         }catch (DataAccessException ex){

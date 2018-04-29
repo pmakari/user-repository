@@ -21,22 +21,22 @@ public class UserServiceTest extends BaseTest {
     public void save_registrationData_succeed() {
         //arrange
         UserRegistrationDTO userRegistrationDTO =UserRegistrationDTO.builder().name("parviz").email("parvizmakarti@gmail.com").password("mm900")
-                .phoneNumber("+4917656883").address(UserEntity.Address.builder().country("Germany").city("Stuttgart").street("Allmandrin")
-                .zipCode("70569").houseNumber((short)35).build()).build();
+                .phoneNumber("+4917656883").country("Germany").city("Stuttgart").street("Allmandrin")
+                .zipCode("70569").houseNumber((short)35).build();
         //act
         UserRegistrationDTO expectedEntity = userService.save(userRegistrationDTO);
         //asserts
         Assert.assertNotEquals(expectedEntity, null);
         Assert.assertEquals(expectedEntity.getName(), userRegistrationDTO.getName());
-        Assert.assertNotNull(expectedEntity.getId());
+        Assert.assertNotNull(expectedEntity.getName());
     }
 
     @Test(expected = DuplicateUserException.class)
     public void save_duplicateUserEmail_throwException() {
         //arrange
         UserRegistrationDTO userRegistrationDTO =UserRegistrationDTO.builder().name("parviz").email("parvizmakarti@gmail.com").password("mm900")
-                .phoneNumber("+4917656883").address(UserEntity.Address.builder().country("Germany").city("Stuttgart").street("Allmandrin")
-                        .zipCode("70569").houseNumber((short)35).build()).build();
+                .phoneNumber("+4917656883").country("Germany").city("Stuttgart").street("Allmandrin")
+                        .zipCode("70569").houseNumber((short)35).build();
         //act
         userService.save(userRegistrationDTO);
         userService.save(userRegistrationDTO);

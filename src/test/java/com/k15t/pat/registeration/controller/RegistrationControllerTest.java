@@ -29,9 +29,9 @@ public class RegistrationControllerTest extends BaseTest {
     @Test
     public void post_registrationData_ok() throws Exception {
         //arrange
-        UserRegistrationDTO requestDTO = UserRegistrationDTO.builder().name("parviz").email("parvizmakarti@gmail.com").password("mm900")
-                .phoneNumber("+4917656883").address(UserEntity.Address.builder().country("Germany").city("Stuttgart").street("Allmandrin")
-                        .zipCode("70569").houseNumber((short) 35).build()).build();
+        UserRegistrationDTO requestDTO = UserRegistrationDTO.builder().name("parviz").email("parviz@gmail.com").password("mm900")
+                .phoneNumber("+4917656883").country("Germany").city("Stuttgart").street("Allmandrin")
+                        .zipCode("70569").houseNumber((short) 35).build();
         //act and asserts
         mvc.perform(post("/register")
                 .content(JacksonMapperConfig.getObjectMapper().writeValueAsString(requestDTO))
@@ -44,7 +44,7 @@ public class RegistrationControllerTest extends BaseTest {
     public void post_wrongRegistrationData_badRequest() throws Exception {
         //arrange
         UserRegistrationDTO requestDTO = UserRegistrationDTO.builder().name("parviz")
-                .email("wrongEmailPattern").password(null).address(null)
+                .email("wrongEmailPattern").password(null).city(null)
                 .phoneNumber("+4917656883").build();
         //act and asserts
         mvc.perform(post("/register")
@@ -59,8 +59,8 @@ public class RegistrationControllerTest extends BaseTest {
     public void post_duplicateEmail_conflictCode() throws Exception {
         //arrange
         UserRegistrationDTO requestDTO = UserRegistrationDTO.builder().name("parviz").email("parvizmakarti@gmail.com").password("mm900")
-                .phoneNumber("+4917656883").address(UserEntity.Address.builder().country("Germany").city("Stuttgart").street("Allmandrin")
-                        .zipCode("70569").houseNumber((short) 35).build()).build();
+                .phoneNumber("+4917656883").country("Germany").city("Stuttgart").street("Allmandrin")
+                        .zipCode("70569").houseNumber((short) 35).build();
         //act and asserts
         mvc.perform(post("/register")
                 .content(JacksonMapperConfig.getObjectMapper().writeValueAsString(requestDTO))
