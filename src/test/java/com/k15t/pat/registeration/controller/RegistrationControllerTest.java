@@ -2,8 +2,7 @@ package com.k15t.pat.registeration.controller;
 
 import com.k15t.pat.registeration.BaseTest;
 import com.k15t.pat.registration.config.JacksonMapperConfig;
-import com.k15t.pat.registration.domain.dto.UserRegistrationDTO;
-import com.k15t.pat.registration.domain.entity.UserEntity;
+import com.k15t.pat.registration.domain.dto.request.UserRegistrationRequestDTO;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
@@ -29,7 +28,7 @@ public class RegistrationControllerTest extends BaseTest {
     @Test
     public void post_registrationData_ok() throws Exception {
         //arrange
-        UserRegistrationDTO requestDTO = UserRegistrationDTO.builder().name("parviz").email("parviz@gmail.com").password("mm900")
+        UserRegistrationRequestDTO requestDTO = UserRegistrationRequestDTO.builder().name("parviz").email("parviz@gmail.com").password("mm900")
                 .phoneNumber("+4917656883").country("Germany").city("Stuttgart").street("Allmandrin")
                         .zipCode("70569").houseNumber((short) 35).build();
         //act and asserts
@@ -43,7 +42,7 @@ public class RegistrationControllerTest extends BaseTest {
     @Test
     public void post_wrongRegistrationData_badRequest() throws Exception {
         //arrange
-        UserRegistrationDTO requestDTO = UserRegistrationDTO.builder().name("parviz")
+        UserRegistrationRequestDTO requestDTO = UserRegistrationRequestDTO.builder().name("parviz")
                 .email("wrongEmailPattern").password(null).city(null)
                 .phoneNumber("+4917656883").build();
         //act and asserts
@@ -58,7 +57,7 @@ public class RegistrationControllerTest extends BaseTest {
     @Test
     public void post_duplicateEmail_conflictCode() throws Exception {
         //arrange
-        UserRegistrationDTO requestDTO = UserRegistrationDTO.builder().name("parviz").email("parvizmakarti@gmail.com").password("mm900")
+        UserRegistrationRequestDTO requestDTO = UserRegistrationRequestDTO.builder().name("parviz").email("parvizmakarti@gmail.com").password("mm900")
                 .phoneNumber("+4917656883").country("Germany").city("Stuttgart").street("Allmandrin")
                         .zipCode("70569").houseNumber((short) 35).build();
         //act and asserts

@@ -1,6 +1,7 @@
-package com.k15t.pat.registration.domain.dto;
+package com.k15t.pat.registration.domain.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.k15t.pat.registration.domain.BaseRequestDTO;
 import com.k15t.pat.registration.domain.entity.UserEntity;
 import lombok.*;
 import org.hibernate.validator.constraints.Email;
@@ -17,7 +18,7 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @Getter
 @Setter
-public class UserRegistrationDTO {
+public class UserRegistrationRequestDTO extends BaseRequestDTO{
 
     @NotBlank
     private String name;
