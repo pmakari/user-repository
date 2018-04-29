@@ -31,5 +31,21 @@ public class RegistrationControllerTest extends BaseTest{
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
+    @Test
+    public void post_wrongRegistrationData_badRequest() throws Exception {
+        //arrange
+        UserRegistrationDTO requestDTO = new UserRegistrationDTO();
+        requestDTO.setPhoneNumber("wrongDataForPhoneNumber");
+        requestDTO.setEmail("emailIsNotValid");
+        requestDTO.setPassword(null);
+        requestDTO.setName(null);
+        //act and asserts
+        mvc.perform(post("/register")
+                .content(JacksonMapperConfig.getObjectMapper().writeValueAsString(requestDTO))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
 
 }
