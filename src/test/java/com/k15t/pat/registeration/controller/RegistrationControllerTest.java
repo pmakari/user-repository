@@ -4,23 +4,34 @@ import com.k15t.pat.registeration.BaseTest;
 import com.k15t.pat.registration.config.JacksonMapperConfig;
 import com.k15t.pat.registration.domain.dto.UserRegistrationDTO;
 import com.k15t.pat.registration.domain.entity.UserEntity;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
+
+import java.util.Date;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * Created by MAP2LE on 29.04.2018.
+ * Created by Parviz on 29.04.2018.
  */
-public class RegistrationControllerTest extends BaseTest{
+public class RegistrationControllerTest extends BaseTest {
+
+
+    @Before
+    public void init() {
+        jdbcTemplate.update("insert into users(id,created_at,version,name, password, email, phone_number,country,city,street,zip_code,house_number) " +
+                        "values(?,?, ?, ?, ?, ?,?,?,?,?,?,?)",
+                1, new Date(), 1l, "Parviz", "password", "parvizmakarti@gmail.com", "+4917678", "Germany", "Stuttgart", "Allmandring", "70569", (short) 3);
+    }
 
     @Test
     public void post_registrationData_ok() throws Exception {
         //arrange
-        UserRegistrationDTO requestDTO =UserRegistrationDTO.builder().name("parviz").email("parvizmakarti@gmail.com").password("mm900")
+        UserRegistrationDTO requestDTO = UserRegistrationDTO.builder().name("parviz").email("parvizmakarti@gmail.com").password("mm900")
                 .phoneNumber("+4917656883").address(UserEntity.Address.builder().country("Germany").city("Stuttgart").street("Allmandrin")
-                        .zipCode("70569").houseNumber((short)35).build()).build();
+                        .zipCode("70569").houseNumber((short) 35).build()).build();
         //act and asserts
         mvc.perform(post("/register")
                 .content(JacksonMapperConfig.getObjectMapper().writeValueAsString(requestDTO))
@@ -28,10 +39,11 @@ public class RegistrationControllerTest extends BaseTest{
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
+
     @Test
     public void post_wrongRegistrationData_badRequest() throws Exception {
         //arrange
-        UserRegistrationDTO requestDTO =UserRegistrationDTO.builder().name("parviz")
+        UserRegistrationDTO requestDTO = UserRegistrationDTO.builder().name("parviz")
                 .email("wrongEmailPattern").password(null).address(null)
                 .phoneNumber("+4917656883").build();
         //act and asserts
@@ -40,6 +52,21 @@ public class RegistrationControllerTest extends BaseTest{
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
+    }
+
+
+    @Test
+    public void post_duplicateEmail_conflictCode() throws Exception {
+        //arrange
+        UserRegistrationDTO requestDTO = UserRegistrationDTO.builder().name("parviz").email("parvizmakarti@gmail.com").password("mm900")
+                .phoneNumber("+4917656883").address(UserEntity.Address.builder().country("Germany").city("Stuttgart").street("Allmandrin")
+                        .zipCode("70569").houseNumber((short) 35).build()).build();
+        //act and asserts
+        mvc.perform(post("/register")
+                .content(JacksonMapperConfig.getObjectMapper().writeValueAsString(requestDTO))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isConflict());
     }
 
 
