@@ -22,24 +22,15 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional
     public UserRegistrationDTO save(UserRegistrationDTO registrationDTO) {
-        UserEntity userEntity =new UserEntity();
-        userEntity.setName(registrationDTO.getName());
-        userEntity.setEmail(registrationDTO.getEmail());
-        userEntity.setPassword(registrationDTO.getPassword());
-        userEntity.setPhoneNumber(registrationDTO.getPhoneNumber());
-        UserEntity.Address address=new UserEntity.Address(registrationDTO.getAddress().getCountry()
-                ,registrationDTO.getAddress().getCity(),registrationDTO.getAddress().getStreet(),registrationDTO.getAddress().getZipCode(),
-                registrationDTO.getAddress().getHouseNumber());
-        userEntity.setAddress(address);
+        UserEntity userEntity = UserEntity.builder().name(registrationDTO.getName())
+        .email(registrationDTO.getEmail()).password(registrationDTO.getPassword()).phoneNumber(registrationDTO.getPhoneNumber())
+        .address(UserEntity.Address.builder().country(registrationDTO.getAddress().getCountry())
+                .city(registrationDTO.getAddress().getCity()).street(registrationDTO.getAddress().getStreet()).zipCode(registrationDTO.getAddress().getZipCode())
+                .houseNumber(registrationDTO.getAddress().getHouseNumber()).build()).build();
         try {
             UserEntity storedUserEntity = userRepository.save(userEntity);
-            UserRegistrationDTO userRegDTO = new UserRegistrationDTO();
-            userRegDTO.setEmail(storedUserEntity.getEmail());
-            userRegDTO.setName(storedUserEntity.getName());
-            userRegDTO.setPhoneNumber(storedUserEntity.getPhoneNumber());
-            userRegDTO.setAddress(storedUserEntity.getAddress());
-            userRegDTO.setId(storedUserEntity.getId());
-            return userRegDTO;
+            return  UserRegistrationDTO.builder().email(storedUserEntity.getEmail()).name(storedUserEntity.getName())
+            .phoneNumber(storedUserEntity.getPhoneNumber()).address(storedUserEntity.getAddress()).id(storedUserEntity.getId()).build();
         }catch (DataIntegrityViolationException ex){
             throw new DuplicateUserException(ex.getMessage(),ex);
         }catch (DataAccessException ex){

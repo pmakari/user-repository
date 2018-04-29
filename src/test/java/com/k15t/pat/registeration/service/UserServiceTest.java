@@ -20,12 +20,9 @@ public class UserServiceTest extends BaseTest {
     @Test
     public void save_registrationData_succeed() {
         //arrange
-        UserRegistrationDTO userRegistrationDTO = new UserRegistrationDTO();
-        userRegistrationDTO.setName("parviz");
-        userRegistrationDTO.setEmail("parvizmakarti@gmail.com");
-        userRegistrationDTO.setPassword("mm900");
-        userRegistrationDTO.setPhoneNumber("+4917656883");
-        userRegistrationDTO.setAddress(new UserEntity.Address("Germany", "Stuttgart", "Allmandring", "70569", (short) 35));
+        UserRegistrationDTO userRegistrationDTO =UserRegistrationDTO.builder().name("parviz").email("parvizmakarti@gmail.com").password("mm900")
+                .phoneNumber("+4917656883").address(UserEntity.Address.builder().country("Germany").city("Stuttgart").street("Allmandrin")
+                .zipCode("70569").houseNumber((short)35).build()).build();
         //act
         UserRegistrationDTO expectedEntity = userService.save(userRegistrationDTO);
         //asserts
@@ -37,12 +34,9 @@ public class UserServiceTest extends BaseTest {
     @Test(expected = DuplicateUserException.class)
     public void save_duplicateUserEmail_throwException() {
         //arrange
-        UserRegistrationDTO userRegistrationDTO = new UserRegistrationDTO();
-        userRegistrationDTO.setName("parviz");
-        userRegistrationDTO.setEmail("parvizmakarti@gmail.com");
-        userRegistrationDTO.setPassword("mm900");
-        userRegistrationDTO.setPhoneNumber("+4917656883");
-        userRegistrationDTO.setAddress(new UserEntity.Address("Germany", "Stuttgart", "Allmandring", "70569", (short) 35));
+        UserRegistrationDTO userRegistrationDTO =UserRegistrationDTO.builder().name("parviz").email("parvizmakarti@gmail.com").password("mm900")
+                .phoneNumber("+4917656883").address(UserEntity.Address.builder().country("Germany").city("Stuttgart").street("Allmandrin")
+                        .zipCode("70569").houseNumber((short)35).build()).build();
         //act
         userService.save(userRegistrationDTO);
         userService.save(userRegistrationDTO);
