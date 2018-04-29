@@ -1,6 +1,7 @@
 package com.k15t.pat.registration.service;
 
 import com.k15t.pat.registration.domain.dto.request.UserRegistrationRequestDTO;
+import com.k15t.pat.registration.domain.dto.response.UserRegistrationResponseDTO;
 import com.k15t.pat.registration.domain.entity.UserEntity;
 import com.k15t.pat.registration.exception.BusinessException;
 import com.k15t.pat.registration.exception.specific.DuplicateUserException;
@@ -21,7 +22,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public UserRegistrationRequestDTO save(UserRegistrationRequestDTO registrationDTO) {
+    public UserRegistrationResponseDTO save(UserRegistrationRequestDTO registrationDTO) {
         UserEntity userEntity = UserEntity.builder().name(registrationDTO.getName())
         .email(registrationDTO.getEmail()).password(registrationDTO.getPassword()).phoneNumber(registrationDTO.getPhoneNumber())
         .address(UserEntity.Address.builder().country(registrationDTO.getCountry())
@@ -29,7 +30,7 @@ public class UserServiceImpl implements UserService{
                 .houseNumber(registrationDTO.getHouseNumber()).build()).build();
         try {
             UserEntity storedUserEntity = userRepository.save(userEntity);
-            return  UserRegistrationRequestDTO.builder().email(storedUserEntity.getEmail()).name(storedUserEntity.getName())
+            return  UserRegistrationResponseDTO.builder().email(storedUserEntity.getEmail()).name(storedUserEntity.getName())
             .phoneNumber(storedUserEntity.getPhoneNumber()).city(storedUserEntity.getAddress().getCity())
                     .country(storedUserEntity.getAddress().getCountry())
                     .street(storedUserEntity.getAddress().getStreet())

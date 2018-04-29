@@ -1,6 +1,7 @@
 package com.k15t.pat.registration.domain.dto.response;
 
 import com.k15t.pat.registration.domain.BaseResponseDTO;
+import lombok.*;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -9,6 +10,11 @@ import javax.validation.constraints.Pattern;
 /**
  * Created by MAP2LE on 29.04.2018.
  */
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserRegistrationResponseDTO extends BaseResponseDTO{
 
     private String name;

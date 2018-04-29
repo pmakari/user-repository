@@ -2,6 +2,7 @@ package com.k15t.pat.registration.controller;
 
 import com.k15t.pat.registration.aspect.CheckBindingResult;
 import com.k15t.pat.registration.domain.dto.request.UserRegistrationRequestDTO;
+import com.k15t.pat.registration.domain.dto.response.UserRegistrationResponseDTO;
 import com.k15t.pat.registration.service.UserService;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -24,7 +25,7 @@ public class RegistrationController {
     @Autowired
     private VelocityEngine velocityEngine;
     @Autowired
-    UserService userService;
+    private UserService userService;
 
 
     @GetMapping("/registration.html")
@@ -39,7 +40,7 @@ public class RegistrationController {
     }
     @CheckBindingResult
     @PostMapping("/register")
-    public UserRegistrationRequestDTO register(@RequestBody @Validated UserRegistrationRequestDTO userRegistrationRequestDTO, BindingResult bindingResult){
+    public UserRegistrationResponseDTO register(@RequestBody @Validated UserRegistrationRequestDTO userRegistrationRequestDTO, BindingResult bindingResult){
         LOGGER.info("UserEntity Email: ", userRegistrationRequestDTO.getEmail());
         return userService.save(userRegistrationRequestDTO);
 
