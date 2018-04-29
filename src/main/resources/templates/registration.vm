@@ -2,8 +2,8 @@
     <head>
         <title>PAT Registration</title>
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     </head>
     <body>
         #parse ("common/header.vm")
@@ -15,7 +15,7 @@
                         <h3 class="panel-title">Java Meetup Registration</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form">
+                        <form role="form" id="regForm">
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
-                                        <input type="text" name="Country" id="Country" class="form-control input-sm" placeholder="Country" required>
+                                        <input type="text" name="country" id="country" class="form-control input-sm" placeholder="Country" required>
                                     </div>
                                 </div>
                             </div>
@@ -78,4 +78,5 @@
     </div>
         #parse ("common/footer.vm")
     </body>
+    <script type="text/javascript" src="public/js/registration.js"></script>
 </html>
