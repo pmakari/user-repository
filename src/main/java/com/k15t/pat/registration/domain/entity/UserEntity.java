@@ -10,7 +10,9 @@ import javax.validation.constraints.NotNull;
  * Created by Parviz on 28.04.2018.
  */
 @Entity
-@Table(name = "users")
+@Table(name = "users",uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"email"}, name = "UNIQUE_USER_EMAIL")}, indexes = {
+        @Index(name = "INDEX_USER_NAME", columnList = "name")})
 public class UserEntity extends BaseEntity {
 
     @NotBlank
@@ -25,7 +27,7 @@ public class UserEntity extends BaseEntity {
     @Column(nullable = false, length = 128)
     private String email;
 
-    @Column(length = 64)
+    @Column(length = 32)
     private String phoneNumber;
     @Embedded
     private Address address;

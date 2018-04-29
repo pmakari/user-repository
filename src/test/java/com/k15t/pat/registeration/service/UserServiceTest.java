@@ -3,6 +3,7 @@ package com.k15t.pat.registeration.service;
 import com.k15t.pat.registeration.BaseTest;
 import com.k15t.pat.registration.domain.dto.UserRegistrationDTO;
 import com.k15t.pat.registration.domain.entity.UserEntity;
+import com.k15t.pat.registration.exception.specific.DuplicateUserException;
 import com.k15t.pat.registration.service.UserService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -32,4 +33,19 @@ public class UserServiceTest extends BaseTest {
         Assert.assertEquals(expectedEntity.getName(), userRegistrationDTO.getName());
         Assert.assertNotNull(expectedEntity.getId());
     }
+
+    @Test(expected = DuplicateUserException.class)
+    public void save_duplicateUserEmail_throwException() {
+        //arrange
+        UserRegistrationDTO userRegistrationDTO = new UserRegistrationDTO();
+        userRegistrationDTO.setName("parviz");
+        userRegistrationDTO.setEmail("parvizmakarti@gmail.com");
+        userRegistrationDTO.setPassword("mm900");
+        userRegistrationDTO.setPhoneNumber("+4917656883");
+        userRegistrationDTO.setAddress(new UserEntity.Address("Germany", "Stuttgart", "Allmandring", "70569", (short) 35));
+        //act
+        userService.save(userRegistrationDTO);
+        userService.save(userRegistrationDTO);
+    }
+
 }
