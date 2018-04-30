@@ -1,6 +1,7 @@
 package com.k15t.pat.registration.controller;
 
 import com.k15t.pat.registration.aspect.CheckBindingResult;
+import com.k15t.pat.registration.domain.BaseResponseDTO;
 import com.k15t.pat.registration.domain.dto.request.UserRegistrationRequestDTO;
 import com.k15t.pat.registration.domain.dto.response.UserRegistrationResponseDTO;
 import com.k15t.pat.registration.service.UserService;
@@ -10,6 +11,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +29,13 @@ public class RegistrationController {
     @Autowired
     private UserService userService;
 
+    private MessageSource messageSource;
+
+    @Autowired
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
 
     @GetMapping("/registration.html")
     public String registration() {
@@ -38,12 +47,14 @@ public class RegistrationController {
 
         return writer.toString();
     }
+
     @CheckBindingResult
     @PostMapping("/register")
-    public UserRegistrationResponseDTO register(@RequestBody @Validated UserRegistrationRequestDTO userRegistrationRequestDTO, BindingResult bindingResult){
+    public BaseResponseDTO register(@RequestBody @Validated UserRegistrationRequestDTO userRegistrationRequestDTO, BindingResult bindingResult) {
         LOGGER.info("UserEntity Email: ", userRegistrationRequestDTO.getEmail());
-        return userService.save(userRegistrationRequestDTO);
-
+         BaseResponseDTO response=userService.save(userRegistrationRequestDTO);
+         response.setMessage(messageSource.getMessage("register_success", null, null));
+         return response;
     }
 
 }
