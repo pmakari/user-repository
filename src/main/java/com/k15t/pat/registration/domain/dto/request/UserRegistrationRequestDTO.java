@@ -30,7 +30,7 @@ public class UserRegistrationRequestDTO extends BaseRequestDTO{
     @Email
     private String email;
 
-    @Pattern(regexp = "^$|^[+]{0,1}[0-9]{5,32}$")
+    @Pattern(regexp = "^$|^[+]{0,1}[0-9]{5,32}$", message = "Please enter a valid phone number")
     private String phoneNumber;
 
     @NotBlank

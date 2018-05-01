@@ -76,11 +76,9 @@ $("#regForm").submit(function(event){
         if(jqXHR.status == 400){
             $('#response').addClass('alert alert-danger');
             $('#response').empty();
-            alert(jqXHR.responseText);
             var data = JSON.parse(jqXHR.responseText);
             $.each(data, function (index, row) {
-                $('#response').append('<h6>'+row.field + ' '+row.message+'</h6>');
-                alert(row.field+ '=' + row.message);
+                $('#response').append('<h6>'+row.message+'</h6>');
             });
 
         }else
