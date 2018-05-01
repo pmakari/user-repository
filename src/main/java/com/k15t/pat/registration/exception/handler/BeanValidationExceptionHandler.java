@@ -19,6 +19,7 @@ import java.util.List;
 
 /**
  * Created by Parviz on 29.04.2018.
+ * This class handles BeanValidationException and returns ErrorResource which contains field and message
  */
 @ControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)

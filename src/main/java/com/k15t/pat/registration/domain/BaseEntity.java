@@ -13,6 +13,7 @@ import java.util.Objects;
 
 /**
  * Created by Parviz on 28.04.2018.
+ * All entities should extend this entity to have common fields and version field for optimistic locking
  */
 @MappedSuperclass
 @Getter

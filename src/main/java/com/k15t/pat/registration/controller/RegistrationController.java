@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.StringWriter;
 
+/**
+ * This class acts as a rest controller for handling user registration data
+ */
 
 @RestController
 public class RegistrationController {
