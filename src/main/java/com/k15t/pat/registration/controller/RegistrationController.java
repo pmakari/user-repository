@@ -44,7 +44,6 @@ public class RegistrationController {
         VelocityContext context = new VelocityContext();
         StringWriter writer = new StringWriter();
         template.merge(context, writer);
-
         return writer.toString();
     }
 
@@ -53,7 +52,7 @@ public class RegistrationController {
     public BaseResponseDTO register(@RequestBody @Validated UserRegistrationRequestDTO userRegistrationRequestDTO, BindingResult bindingResult) {
         LOGGER.info("UserEntity Email: ", userRegistrationRequestDTO.getEmail());
          BaseResponseDTO response=userService.save(userRegistrationRequestDTO);
-         response.setMessage(messageSource.getMessage("register_success", null, null));
+         response.setMessage(messageSource.getMessage("register.success", null, null));
          return response;
     }
 

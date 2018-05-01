@@ -55,16 +55,38 @@ $("#regForm").submit(function(event){
     // Callback handler that will be called on success
     request.done(function (response, textStatus, jqXHR){
         // Log a message to the console
-        console.log("Hooray, it worked!");
+        $('#response').addClass('alert alert-success').html(response.message);
+        $('#regForm').trigger("reset");
+        $('#regForm').hide()
+        $('#panelMsg').empty();
+        $('#panelMsg').text("Your Entered Data");
+        $('#responseData').show();
+        $('#responseData ul').append('<li>Name : '+response.name+'</li>');
+        $('#responseData ul').append('<li>Email :' +response.email+'</li>');
+        if (response.phoneNumber!="") {
+            $('#responseData ul').append('<li>Phone Number : ' + response.phoneNumber + '</li>');
+        }
+        $('#responseData ul').append('<li>Address : '+response.country+'</li>');
+        console.log(response);
     });
 
     // Callback handler that will be called on failure
     request.fail(function (jqXHR, textStatus, errorThrown){
         // Log the error to the console
-        console.error(
-            "The following error occurred: "+
-            textStatus, errorThrown
-        );
+        if(jqXHR.status == 400){
+            $('#response').addClass('alert alert-danger');
+            $('#response').empty();
+            alert(jqXHR.responseText);
+            var data = JSON.parse(jqXHR.responseText);
+            $.each(data, function (index, row) {
+                $('#response').append('<h6>'+row.field + ' '+row.message+'</h6>');
+                alert(row.field+ '=' + row.message);
+            });
+
+        }else
+        {
+            $('#response').addClass('alert alert-danger').html(jqXHR.responseText);
+        }
     });
 
     // Callback handler that will be called regardless
