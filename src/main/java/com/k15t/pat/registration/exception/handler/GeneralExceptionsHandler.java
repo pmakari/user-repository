@@ -4,6 +4,8 @@ import com.k15t.pat.registration.exception.general.DuplicateResourceException;
 import com.k15t.pat.registration.exception.general.NoSuchResourceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -26,12 +28,20 @@ public class GeneralExceptionsHandler extends ResponseEntityExceptionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GeneralExceptionsHandler.class);
 
+    private MessageSource messageSource;
+
+    @Autowired
+    public GeneralExceptionsHandler(MessageSource messageSource){
+        this.messageSource = messageSource;
+    }
+
     @ExceptionHandler({DuplicateResourceException.class})
     protected ResponseEntity<Object> handleInvalidRequest(DuplicateResourceException exception, WebRequest request) {
         LOGGER.error("The resource already exists! {}", exception.getMessage());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        return handleExceptionInternal(exception, null, headers, HttpStatus.CONFLICT, request);
+        String body = messageSource.getMessage("register.duplicate", null, null);
+        return handleExceptionInternal(exception, body, headers, HttpStatus.CONFLICT, request);
     }
 
     @ExceptionHandler({NoSuchResourceException.class})
