@@ -1,7 +1,7 @@
-#Java Meetup Registration
+# Java Meetup Registration
 Simple web application which registers users for java Meetup
 
-#Installation
+## Installation
 Clone the project and run this command
 `mvn spring-boot:run`
 For packaging and testing the project run the following command
@@ -9,19 +9,19 @@ For packaging and testing the project run the following command
 For running the project after packaging use the following command
 ` java -jar target/k15t-full-stack-dev-tasks.jar 
 ` 
-#Technology stack
+## Technology stack
 **Java 8**
 **Maven**
 **SpringBoot 1.4.7**
 **Flyway**
 **Project Lombok**
 
-#Prerequisites
+## Prerequisites
 **Maven**
 **JDK 8**
 
 
-#Description
+## Description
  Flyway added for database migration and versioning
  Used HSQL embedded database 
  There are three profiles for application (**prod**,**dev**,**test**), the default 
