@@ -5,6 +5,7 @@
 
     <groupId>com.k15t.recruiting</groupId>
     <artifactId>k15t-full-stack-dev-tasks</artifactId>
+    <description>Simple web application which registers users for java Meetup</description>
     <version>0.1.0</version>
 
     <name>K15t assessment tasks for full stack developers.</name>
@@ -70,6 +71,7 @@
     </properties>
 
     <build>
+        <finalName>k15t-full-stack-dev-tasks</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
